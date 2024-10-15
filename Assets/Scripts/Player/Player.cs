@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private bool attackInput;
     private bool isAttacking;
     
+    
     private void Awake()
     {
         stateMachine = new StateMachine();
@@ -64,8 +65,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         stateMachine.Update();
-
-        Debug.Log(attackInput);
     }
     
     private void FixedUpdate()

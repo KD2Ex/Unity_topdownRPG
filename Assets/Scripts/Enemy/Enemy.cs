@@ -1,52 +1,61 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [field:SerializeField] public NavMeshAgent agent;
-    [field:SerializeField] public float health { get; private set; }
+    [field:SerializeField] public NavMeshAgent agent { get; protected set; }
+    [field:SerializeField] public Animator animator { get; protected set; }
+    [field:SerializeField] public float health { get; protected set; }
     
-    private Transform player;
-    private StateMachine stateMachine;
+    public Transform playerTransform { get; private set; }
+    protected StateMachine stateMachine;
+    protected float distanceToPlayer => (playerTransform.position - transform.position).magnitude;
 
-    private float distanceToPlayer => (player.position - transform.position).magnitude;
+    protected bool isAttacking;
+    protected bool attackReady = true;
+    protected bool hited;
+    protected bool stunned;
+    protected bool dead;
+    
+    public readonly int hash_lastX = Animator.StringToHash("LastX");
+    public readonly int hash_lastY = Animator.StringToHash("LastY");
+    public readonly int hash_X = Animator.StringToHash("X");
+    public readonly int hash_Y = Animator.StringToHash("Y");
+    public readonly int hash_attack = Animator.StringToHash("Attack");
+    public readonly int hash_angle = Animator.StringToHash("Angle");
 
-    private bool isAttacking;
-    private bool hited;
-    private bool stunned;
-    private bool dead;
 
-    private float stunTime = 1.5f;
+    public Vector2 DirectionToPlayer => (playerTransform.position - transform.position).normalized.normalized;
     
     private void Awake()
     {
-        player = FindObjectOfType<Player>()?.transform;
+        playerTransform = FindObjectOfType<Player>()?.transform;
+        Debug.Log($"player pos: {playerTransform.position}");
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
         
-        stateMachine = new StateMachine();
-
-        var idle = new EnemyIdleState(this);
-        var chase = new EnemyChaseState(this);
-        var attack = new EnemyAttackState(this);
-        var hit = new EnemyHitState(this);
-        var death = new EnemyDeathState(this);
-
-        At(idle, chase, new FuncPredicate(() => distanceToPlayer <= 20f));
-        At(chase, idle, new FuncPredicate(() => distanceToPlayer > 20f));
-        
-        At(chase, attack, new FuncPredicate(() => distanceToPlayer < 3f));
-        At(attack, idle, new FuncPredicate(() => !isAttacking));
-        
-        AtAny(hit, new FuncPredicate(() => hited));
-        At(hit, idle, new ActionPredicate(() => stunned, () => hited = false));
-        
-        AtAny(death, new FuncPredicate(() => dead));
-        
-        stateMachine.SetState(idle);
+        InitializeStates();
     }
-    
-    private void At(IState from, IState to, IPredicate predicate) => stateMachine.AddTransition(from, to, predicate);
-    private void AtAny(IState to, IPredicate predicate) => stateMachine.AddAnyTransition(to, predicate);
+
+    protected virtual void InitializeStates()
+    {
+        
+    }
+
+    protected void At(IState from, IState to, IPredicate predicate) => stateMachine.AddTransition(from, to, predicate);
+    protected void AtAny(IState to, IPredicate predicate) => stateMachine.AddAnyTransition(to, predicate);
+
+    private void Update()
+    {
+        stateMachine.Update();
+    }
+
+    private void FixedUpdate()
+    {
+        stateMachine.FixedUpdate();
+    }
 
     public void TakeDamage(float damage)
     {
@@ -60,20 +69,27 @@ public class Enemy : MonoBehaviour
         } 
     }
     
-    public void Stun()
+    public void Stun(float time)
     {
-        StartCoroutine(BeingStunned());
+        StartCoroutine(Cooldown(time, (coroutineEnded) => stunned = !coroutineEnded));
+    }
+    public virtual void Attacking(bool value) => isAttacking = value;
+
+    public void AttackCooldown(float time)
+    {
+        StartCoroutine(Cooldown(time, (coroutineEnded) => attackReady = coroutineEnded));
     }
 
-    private IEnumerator BeingStunned()
+    private IEnumerator Cooldown(float seconds, Action<bool> func)
     {
-        stunned = true;
-        yield return new WaitForSeconds(stunTime);
-        stunned = false;
+        func(false);
+        yield return new WaitForSeconds(seconds);
+        func(true);
     }
 
     private void Die()
     {
         dead = true;
     }
+
 }

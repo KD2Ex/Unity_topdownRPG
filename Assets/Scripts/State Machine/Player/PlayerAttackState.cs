@@ -10,13 +10,9 @@ public class PlayerAttackState : PlayerBaseState
     {
         base.Enter();
 
-        Debug.Log("Attack state");
 
         var dir = player.GetAttackDir();
         var angle = player.GetAngle(dir);
-
-        Debug.Log(dir);
-        Debug.Log(angle);
         
         player.animator.SetFloat(player.hash_angle, angle);
         player.animator.SetTrigger(player.hash_attack);
