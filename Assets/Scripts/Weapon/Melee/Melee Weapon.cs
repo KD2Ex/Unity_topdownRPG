@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
@@ -16,7 +17,6 @@ public class MeleeWeapon : MonoBehaviour
 
     public void AttackBottom()
     {
-        Debug.Log("Bottom Attack");
         EnableOnly(bottom);
     }
 
@@ -35,6 +35,30 @@ public class MeleeWeapon : MonoBehaviour
         EnableOnly(right);
     }
 
+    public void Attack(Vector2 dir)
+    {
+        var angle = Mathf.Atan2(dir.y, dir.x);
+
+        dir = Vector3.Normalize(dir);
+        
+        if (dir.x > .71)
+        {
+            EnableOnly(right);
+        }
+        if (dir.y > .71)
+        {
+            EnableOnly(top);
+        }
+        if (dir.x < -.71)
+        {
+            EnableOnly(left);
+        }
+        if (dir.y < -.71)
+        {
+            EnableOnly(bottom);
+        }
+    }
+    
     public void AttackEnded()
     {
         DisableAllColliders();

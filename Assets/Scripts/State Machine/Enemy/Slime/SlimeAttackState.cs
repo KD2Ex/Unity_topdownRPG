@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class SlimeAttackState :  EnemyBaseState
 {
     private float cooldown;
     private Slime slime;
+    private bool attacked;
 
-    private float elapsedTime;
     
     public SlimeAttackState(Slime enemy, float cooldown) : base(enemy)
     {
@@ -18,6 +19,7 @@ public class SlimeAttackState :  EnemyBaseState
         base.Enter();
         enemy.Attacking(true);
         enemy.animator.SetTrigger(enemy.hash_attack);
+        attacked = false;
     }
 
     public override void Update()
@@ -26,21 +28,14 @@ public class SlimeAttackState :  EnemyBaseState
         
         var stateInfo = enemy.animator.GetCurrentAnimatorStateInfo(0);
 
-        elapsedTime += Time.deltaTime;
-
-        //if (elapsedTime == 0f) return; // mockTime
-
         if (!stateInfo.IsName("Attack")) return;
-        
-        Debug.Log(stateInfo.normalizedTime);
-        Debug.Log("shortName " + stateInfo.shortNameHash);
-        Debug.Log("enemy Hash " + enemy.hash_attack);
         
         if (stateInfo.normalizedTime > .7f)
         {
-            if (!slime.attack.activeInHierarchy)
+            if (!slime.attack.activeInHierarchy && !attacked)
             {
                 slime.attack.SetActive(true);
+                attacked = true;
             }
         }
         
@@ -55,7 +50,7 @@ public class SlimeAttackState :  EnemyBaseState
     public override void Exit()
     {
         base.Exit();
-        slime.attack.SetActive(false);
+        //slime.attack.SetActive(false);
         enemy.AttackCooldown(cooldown);
     }
 }

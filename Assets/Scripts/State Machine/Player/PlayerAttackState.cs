@@ -16,6 +16,7 @@ public class PlayerAttackState : PlayerBaseState
         
         player.animator.SetFloat(player.hash_angle, angle);
         player.animator.SetTrigger(player.hash_attack);
+        player.meleeWeapon.Attack(dir);
         player.Attacking(true);
     }
 

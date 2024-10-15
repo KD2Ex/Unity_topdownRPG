@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
     public readonly int hash_Y = Animator.StringToHash("Y");
     public readonly int hash_attack = Animator.StringToHash("Attack");
     public readonly int hash_angle = Animator.StringToHash("Angle");
+    public readonly int hash_hit = Animator.StringToHash("Hit");
+    public readonly int hash_death = Animator.StringToHash("Death");
 
 
     public Vector2 DirectionToPlayer => (playerTransform.position - transform.position).normalized.normalized;
@@ -50,6 +52,8 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
+
+        Debug.Log(stateMachine.CurrentState.ToString());
     }
 
     private void FixedUpdate()
@@ -59,6 +63,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        Debug.Log("Took damage");
+        
         hited = true;
         
         health -= damage;
@@ -92,4 +98,9 @@ public class Enemy : MonoBehaviour
         dead = true;
     }
 
+    public void HitEnded()
+    {
+        hited = false;
+    }
+    
 }

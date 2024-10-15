@@ -15,6 +15,7 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
     
     public  UnityAction<Vector2> MoveEvent;
     public  UnityAction<bool> AttackEvent;
+    public UnityAction DevEvent;
     
     private static bool WasMoovedThisFrame;
 
@@ -63,7 +64,9 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
 
     public void OnDev(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (!context.started) return;
+        
+        DevEvent?.Invoke();
     }
 
     public void OnPause(InputAction.CallbackContext context)

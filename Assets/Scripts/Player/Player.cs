@@ -4,7 +4,6 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private InputReader input;
     
-    
     [field:SerializeField] public MeleeWeapon meleeWeapon { get; private set; }
     [field:SerializeField] public Animator animator { get; private set; }
     [field:SerializeField] public Rigidbody2D rb { get; private set; }
@@ -98,7 +97,7 @@ public class Player : MonoBehaviour
     public Vector2 GetAttackDir()
     {
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var dir = (mousePos - transform.position).normalized.normalized;
+        var dir = (mousePos - transform.position).normalized;
         
         
         return dir;
