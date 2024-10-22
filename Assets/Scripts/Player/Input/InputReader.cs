@@ -16,9 +16,16 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
     public  UnityAction<Vector2> MoveEvent;
     public  UnityAction<bool> AttackEvent;
     public UnityAction DevEvent;
+    public UnityAction InteractEvent;
     
     private static bool WasMoovedThisFrame;
 
+    public void EnablePlayerInput(bool value)
+    {
+        if (value) input.Player.Enable();
+        else input.Player.Disable();
+    }
+    
     private void OnEnable()
     {
         if (input == null)
@@ -42,24 +49,24 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
         if (context.started) return;
         
         var value = context.ReadValue<Vector2>();
-        MoveEvent.Invoke(value);
+        MoveEvent?.Invoke(value);
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.performed) return;
         
-        AttackEvent.Invoke(context.ReadValue<float>() > .01f);
+        AttackEvent?.Invoke(context.ReadValue<float>() > .01f);
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (!context.started) return;
+        InteractEvent?.Invoke();
     }
 
     public void OnDev(InputAction.CallbackContext context)

@@ -1,4 +1,6 @@
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class Player : MonoBehaviour
     [field:SerializeField] public Animator animator { get; private set; }
     [field:SerializeField] public Rigidbody2D rb { get; private set; }
     [field:SerializeField] public float moveSpeed { get; private set; }
+    [field:SerializeField] public float health { get; private set; }
 
     public Vector2 moveDirection { get; private set; }
     public Vector2 lastMoveDirection { get; private set; }
@@ -20,10 +23,12 @@ public class Player : MonoBehaviour
     public readonly int hash_Y = Animator.StringToHash("Y");
     public readonly int hash_attack = Animator.StringToHash("Attack");
     public readonly int hash_angle = Animator.StringToHash("Angle");
+    public readonly int hash_death = Animator.StringToHash("Dead");
 
     private bool attackInput;
     private bool isAttacking;
-    
+
+    private Interactable interactable;
     
     private void Awake()
     {
@@ -32,6 +37,7 @@ public class Player : MonoBehaviour
         var idleState = new PlayerIdleState(this);
         var moveState = new PlayerMoveState(this);
         var attackState = new PlayerAttackState(this);
+        var deathState = new PlayerDeathState(this);
         
         At(idleState, moveState, new FuncPredicate(() => moveDirection.magnitude > 0.01f));
         At(moveState, idleState, new FuncPredicate(() => moveDirection.magnitude <= 0.01f));
@@ -41,6 +47,8 @@ public class Player : MonoBehaviour
         
         At(attackState, idleState, new ActionPredicate(() => !isAttacking, () => attackInput = false));
         
+        AtAny(deathState, new FuncPredicate(() => health <= 0));
+        
         stateMachine.SetState(idleState);
     }
 
@@ -48,12 +56,19 @@ public class Player : MonoBehaviour
     {
         input.MoveEvent += MoveInput;
         input.AttackEvent += AttackInput;
+        input.InteractEvent += Interact;
     }
 
     private void OnDisable()
     {
         input.MoveEvent -= MoveInput;
         input.AttackEvent -= AttackInput;
+        input.InteractEvent -= Interact;
+    }
+
+    public void EnableInput(bool value)
+    {
+        input.EnablePlayerInput(value);
     }
 
     void Start()
@@ -64,6 +79,16 @@ public class Player : MonoBehaviour
     void Update()
     {
         stateMachine.Update();
+
+        if (Keyboard.current.f5Key.wasPressedThisFrame)
+        {
+            SaveSystem.Save();
+        }
+        if (Keyboard.current.f9Key.wasPressedThisFrame)
+        {
+            SaveSystem.Load();
+        }
+        
     }
     
     private void FixedUpdate()
@@ -107,4 +132,49 @@ public class Player : MonoBehaviour
     {
         return (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
     }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        
+    }
+
+    public void SetInteractable(Interactable interactable)
+    {
+        this.interactable = interactable;
+    }
+
+    private void Interact()
+    {
+        if (interactable == null) return;
+        
+        interactable.Interact();
+    }
+
+    public void Save(ref PlayerSaveData data)
+    {
+        data.Position = transform.position;
+    }
+
+    public void Load(PlayerSaveData data)
+    {
+        transform.position = data.Position;
+    }
+}
+
+
+
+[System.Serializable]
+public struct PlayerSaveData
+{
+    public Vector3 Position;
 }
