@@ -1819,6 +1819,7 @@ GameObject:
   - component: {fileID: 1449311069}
   - component: {fileID: 1449311071}
   - component: {fileID: 1449311072}
+  - component: {fileID: 1449311073}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1938,6 +1939,7 @@ MonoBehaviour:
   <meleeWeapon>k__BackingField: {fileID: 1449311072}
   <animator>k__BackingField: {fileID: 1449311071}
   <rb>k__BackingField: {fileID: 1449311069}
+  <Dash>k__BackingField: {fileID: 1449311073}
   <moveSpeed>k__BackingField: 10
   <health>k__BackingField: 100
 --- !u!95 &1449311071
@@ -1977,6 +1979,20 @@ MonoBehaviour:
   left: {fileID: 1803648169}
   top: {fileID: 1779988909}
   right: {fileID: 311355806}
+--- !u!114 &1449311073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449311065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79cd721b40a548d48b1369d3bb9d15df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 35
+  time: 0.15
 --- !u!4 &1465763001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7375073612543343230, guid: cd3cbf1ff93107c4f91165eabca9c803, type: 3}

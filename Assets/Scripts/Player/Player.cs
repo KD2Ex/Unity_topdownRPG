@@ -1,4 +1,3 @@
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +8,7 @@ public class Player : MonoBehaviour
     [field:SerializeField] public MeleeWeapon meleeWeapon { get; private set; }
     [field:SerializeField] public Animator animator { get; private set; }
     [field:SerializeField] public Rigidbody2D rb { get; private set; }
+    [field:SerializeField] public Dash Dash { get; private set; }
     [field:SerializeField] public float moveSpeed { get; private set; }
     [field:SerializeField] public float health { get; private set; }
 
@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     private bool isAttacking;
 
     private Interactable interactable;
+
+    private Camera mainCamera => Camera.main;
     
     private void Awake()
     {
@@ -38,12 +40,19 @@ public class Player : MonoBehaviour
         var moveState = new PlayerMoveState(this);
         var attackState = new PlayerAttackState(this);
         var deathState = new PlayerDeathState(this);
+        var dashState = new PlayerDashState(this);
         
         At(idleState, moveState, new FuncPredicate(() => moveDirection.magnitude > 0.01f));
         At(moveState, idleState, new FuncPredicate(() => moveDirection.magnitude <= 0.01f));
         
         At(idleState, attackState, new FuncPredicate(() => attackInput));
         At(moveState, attackState, new FuncPredicate(() => attackInput));
+        
+        At(idleState, dashState, new FuncPredicate(() => Dash.Dashing));
+        At(moveState, dashState, new FuncPredicate(() => Dash.Dashing));
+        At(attackState, dashState, new FuncPredicate(() => Dash.Dashing));
+        
+        At(dashState, idleState, new FuncPredicate(() => !Dash.Dashing));
         
         At(attackState, idleState, new ActionPredicate(() => !isAttacking, () => attackInput = false));
         
@@ -57,6 +66,7 @@ public class Player : MonoBehaviour
         input.MoveEvent += MoveInput;
         input.AttackEvent += AttackInput;
         input.InteractEvent += Interact;
+        input.DashEvent += ExecuteDash;
     }
 
     private void OnDisable()
@@ -64,6 +74,7 @@ public class Player : MonoBehaviour
         input.MoveEvent -= MoveInput;
         input.AttackEvent -= AttackInput;
         input.InteractEvent -= Interact;
+        input.DashEvent -= ExecuteDash;
     }
 
     public void EnableInput(bool value)
@@ -158,6 +169,22 @@ public class Player : MonoBehaviour
         if (interactable == null) return;
         
         interactable.Interact();
+    }
+
+    private void ExecuteDash()
+    {
+        var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0f;
+        var dir = (mousePos - transform.position);
+
+        Debug.Log("dir" + dir);
+        Debug.Log("dir.normalized" + dir.normalized);
+        Debug.Log("V3Normalize dir" + Vector3.Normalize(dir));
+        Debug.Log("V3 dir.normalized" + Vector3.Normalize(dir.normalized));
+        Debug.Log("dir.normalized.normalized" + dir.normalized.normalized);
+        
+        
+        Dash.Execute(dir.normalized);
     }
 
     public void Save(ref PlayerSaveData data)

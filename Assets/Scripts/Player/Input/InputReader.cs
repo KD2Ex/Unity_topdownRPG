@@ -17,6 +17,7 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
     public  UnityAction<bool> AttackEvent;
     public UnityAction DevEvent;
     public UnityAction InteractEvent;
+    public UnityAction DashEvent;
     
     private static bool WasMoovedThisFrame;
 
@@ -61,6 +62,8 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if (!context.started) return;
+        DashEvent?.Invoke();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
