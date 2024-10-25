@@ -14,7 +14,7 @@ public class MagnetToPlayer : MonoBehaviour
     
     public void Execute()
     {
-        StartCoroutine(Coroutines.MoveTo(Player, rb, 20f));
+        StartCoroutine(Coroutines.MoveTo(Player, rb, 10f));
     }
 
     private void OnTriggerEnter2D(Collider2D other)

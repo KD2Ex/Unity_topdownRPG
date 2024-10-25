@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Coroutines
@@ -21,5 +22,12 @@ public class Coroutines
 
             yield return waiter;
         } while (dist > .1f);
+    }
+
+    public static IEnumerator WaitFor(float seconds, Action before = null, Action after = null)
+    {
+        before?.Invoke();
+        yield return new WaitForSeconds(seconds);
+        after?.Invoke();
     }
 }

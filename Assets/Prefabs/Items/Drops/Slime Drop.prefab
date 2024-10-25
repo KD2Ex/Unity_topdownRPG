@@ -276,3 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2034a2202c196240beccc5da33922c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiInfo:
+    Name: Slime Drop
+    Count: 3

@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour
     [field:SerializeField] public float moveSpeed { get; private set; }
     [field:SerializeField] public float health { get; private set; }
 
+    [field:SerializeField] public PickupUI PickupUI { get; private set; }
+    
     public Vector2 moveDirection { get; private set; }
     public Vector2 lastMoveDirection { get; private set; }
 
@@ -189,11 +192,11 @@ public class Player : MonoBehaviour
         Dash.Execute(dir.normalized);
     }
 
-    public void AddItem(Item item)
+    public void AddItem(Item item, PickupInfo uiInfo)
     {
         Debug.Log(item.name);
+        PickupUI.ShowPickupItem(uiInfo);
     }
-    
 
     public void Save(ref PlayerSaveData data)
     {
