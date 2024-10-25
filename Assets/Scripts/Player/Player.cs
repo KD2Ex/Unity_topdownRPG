@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     
     private void Awake()
     {
+        GameManager.instance.Player = this;
+        
         stateMachine = new StateMachine();
         
         var idleState = new PlayerIdleState(this);
@@ -186,6 +188,12 @@ public class Player : MonoBehaviour
         
         Dash.Execute(dir.normalized);
     }
+
+    public void AddItem(Item item)
+    {
+        Debug.Log(item.name);
+    }
+    
 
     public void Save(ref PlayerSaveData data)
     {

@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [field:SerializeField] public NavMeshAgent agent { get; protected set; }
     [field:SerializeField] public Animator animator { get; protected set; }
+    [field:SerializeField] public Drop Drop { get; protected set; }
     [field:SerializeField] public float health { get; protected set; }
     
     public Transform playerTransform { get; private set; }

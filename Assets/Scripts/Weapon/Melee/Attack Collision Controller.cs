@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AttackCollisionController : MonoBehaviour
 {
-    [SerializeField] private float damage;
+    [SerializeField] private FloatVariable damage;
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,6 +13,6 @@ public class AttackCollisionController : MonoBehaviour
         Debug.Log($"{other.gameObject.name}");
         if (!enemy) return;
         
-        enemy.TakeDamage(damage);
+        enemy.TakeDamage(damage.Value);
     }
 }

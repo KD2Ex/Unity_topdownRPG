@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 1394797607204414181}
   - component: {fileID: 7148308713139596358}
   - component: {fileID: 9086356049741218115}
+  - component: {fileID: 5402678822676941534}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -392,9 +393,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <agent>k__BackingField: {fileID: 7148308713139596358}
   <animator>k__BackingField: {fileID: 1394797607204414181}
+  <Drop>k__BackingField: {fileID: 5402678822676941534}
   <health>k__BackingField: 100
   attackCooldown: 2
   <attack>k__BackingField: {fileID: 8927490710445093734}
+--- !u!114 &5402678822676941534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742622688528792910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99110e01b9e9c80469cb57df4a3cf5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 1938135317871842018, guid: c794afc0bd5818f46a4510a3916bd39f, type: 3}
 --- !u!1 &8927490710445093734
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 0.155
-  damage: 100
+  damage: 10
 --- !u!58 &4983985018777825791
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -33,6 +33,7 @@ public class EnemyDeathState : EnemyBaseState
 
         if (elapsed > time)
         {
+            enemy.Drop.Spawn();
             enemy.gameObject.SetActive(false);
         }
 
