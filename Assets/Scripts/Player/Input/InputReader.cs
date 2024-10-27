@@ -18,6 +18,7 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
     public UnityAction DevEvent;
     public UnityAction InteractEvent;
     public UnityAction DashEvent;
+    public UnityAction ParryEvent;
     
     private static bool WasMoovedThisFrame;
 
@@ -79,8 +80,15 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
         DevEvent?.Invoke();
     }
 
+    public void OnParry(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+
+        ParryEvent?.Invoke();
+    }
+
     public void OnPause(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        
     }
 }

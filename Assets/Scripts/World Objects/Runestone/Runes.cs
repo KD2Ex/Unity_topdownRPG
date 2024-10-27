@@ -20,8 +20,6 @@ public class Runes : MonoBehaviour
             if (AlphaColor <= 0f) return;
             SetAlpha(AlphaColor - Time.deltaTime);
         }
-
-        Debug.Log(AlphaColor);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -3,27 +3,28 @@ using UnityEngine;
 public class Parry : MonoBehaviour
 {
     [SerializeField] private GameObject vfx;
+    [SerializeField] private GameObject shield;
     [SerializeField] private float time;
 
-    private bool running;
+    public bool Running { get; private set; }
     
     public void Execute()
     {
-        if (running) return;
+        if (Running) return;
 
         StartCoroutine(Coroutines.WaitFor(time, ParryStart, ParryEnd));
     }
 
     private void ParryStart()
     {
-        running = true;
-        vfx.SetActive(true);
+        Running = true;
+        shield.SetActive(true);
 
     }
 
     private void ParryEnd()
     {
-        running = false;
-        vfx.SetActive(false);
+        Running = false;
+        shield.SetActive(false);
     }
 }

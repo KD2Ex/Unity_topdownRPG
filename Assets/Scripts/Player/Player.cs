@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     PlayerAttackState attackState;
     PlayerDeathState deathState;
     PlayerDashState dashState;
+    PlayerParryState parryState;
     
     private void Awake()
     {
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
         attackState = new PlayerAttackState(this);
         deathState = new PlayerDeathState(this);
         dashState = new PlayerDashState(this);
+        parryState = new PlayerParryState(this);
         
         At(idleState, moveState, new FuncPredicate(() => moveDirection.magnitude > 0.01f));
         At(moveState, idleState, new FuncPredicate(() => moveDirection.magnitude <= 0.01f));
@@ -69,6 +71,10 @@ public class Player : MonoBehaviour
         At(attackState, dashState, new FuncPredicate(() => IsDashing()));
         
         At(dashState, idleState, new FuncPredicate(() => !IsDashing()));
+        
+        At(idleState, parryState, new FuncPredicate(IsParrying));
+        At(moveState, parryState, new FuncPredicate(IsParrying));
+        At(parryState, idleState, new FuncPredicate(() => !IsParrying()));
         
         At(attackState, idleState, new ActionPredicate(() => !isAttacking, () => attackInput = false));
         
@@ -83,6 +89,13 @@ public class Player : MonoBehaviour
 
         return Dash.Dashing;
     }
+
+    private bool IsParrying()
+    {
+        if (!Parry) return false;
+
+        return Parry.Running;
+    }
     
     private void OnEnable()
     {
@@ -90,6 +103,7 @@ public class Player : MonoBehaviour
         input.AttackEvent += AttackInput;
         input.InteractEvent += Interact;
         input.DashEvent += ExecuteDash;
+        input.ParryEvent += ExecuteParry;
     }
 
     private void OnDisable()
@@ -98,6 +112,7 @@ public class Player : MonoBehaviour
         input.AttackEvent -= AttackInput;
         input.InteractEvent -= Interact;
         input.DashEvent -= ExecuteDash;
+        input.ParryEvent -= ExecuteParry;
     }
 
     public void EnableInput(bool value)
@@ -165,9 +180,34 @@ public class Player : MonoBehaviour
     {
         return (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
     }
+    
+    private void ExecuteDash()
+    {
+        if (!Dash) return;
+        
+        var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0f;
+        var dir = (mousePos - transform.position);
+
+        Debug.Log("dir" + dir);
+        Debug.Log("dir.normalized" + dir.normalized);
+        Debug.Log("V3Normalize dir" + Vector3.Normalize(dir));
+        Debug.Log("V3 dir.normalized" + Vector3.Normalize(dir.normalized));
+        Debug.Log("dir.normalized.normalized" + dir.normalized.normalized);
+        
+        
+        Dash.Execute(dir.normalized);
+    }
+
+    private void ExecuteParry()
+    {
+        Parry.Execute();
+    }
 
     public void TakeDamage(float damage)
     {
+        if (Parry.Running) return;
+        
         health -= damage;
 
         if (health <= 0)
@@ -193,23 +233,6 @@ public class Player : MonoBehaviour
         interactable.Interact();
     }
 
-    private void ExecuteDash()
-    {
-        if (!Dash) return;
-        
-        var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f;
-        var dir = (mousePos - transform.position);
-
-        Debug.Log("dir" + dir);
-        Debug.Log("dir.normalized" + dir.normalized);
-        Debug.Log("V3Normalize dir" + Vector3.Normalize(dir));
-        Debug.Log("V3 dir.normalized" + Vector3.Normalize(dir.normalized));
-        Debug.Log("dir.normalized.normalized" + dir.normalized.normalized);
-        
-        
-        Dash.Execute(dir.normalized);
-    }
 
     public void AddItem(Item item, PickupInfo uiInfo)
     {
