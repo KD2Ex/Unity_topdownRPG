@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,11 +8,16 @@ public class Player : MonoBehaviour
     [field:SerializeField] public MeleeWeapon meleeWeapon { get; private set; }
     [field:SerializeField] public Animator animator { get; private set; }
     [field:SerializeField] public Rigidbody2D rb { get; private set; }
-    [field:SerializeField] public Dash Dash { get; private set; }
     [field:SerializeField] public float moveSpeed { get; private set; }
     [field:SerializeField] public float health { get; private set; }
 
     [field:SerializeField] public PickupUI PickupUI { get; private set; }
+    
+    [Space]
+    
+    [Header("Abilities")]
+    [SerializeField] private Dash Dash;
+    [SerializeField] private Parry Parry;
     
     public Vector2 moveDirection { get; private set; }
     public Vector2 lastMoveDirection { get; private set; }
@@ -35,29 +39,36 @@ public class Player : MonoBehaviour
 
     private Camera mainCamera => Camera.main;
     
+    PlayerIdleState idleState;
+    PlayerMoveState moveState;
+    PlayerAttackState attackState;
+    PlayerDeathState deathState;
+    PlayerDashState dashState;
+    
     private void Awake()
     {
         GameManager.instance.Player = this;
         
         stateMachine = new StateMachine();
         
-        var idleState = new PlayerIdleState(this);
-        var moveState = new PlayerMoveState(this);
-        var attackState = new PlayerAttackState(this);
-        var deathState = new PlayerDeathState(this);
-        var dashState = new PlayerDashState(this);
+
+        idleState = new PlayerIdleState(this);
+        moveState = new PlayerMoveState(this);
+        attackState = new PlayerAttackState(this);
+        deathState = new PlayerDeathState(this);
+        dashState = new PlayerDashState(this);
         
         At(idleState, moveState, new FuncPredicate(() => moveDirection.magnitude > 0.01f));
         At(moveState, idleState, new FuncPredicate(() => moveDirection.magnitude <= 0.01f));
         
         At(idleState, attackState, new FuncPredicate(() => attackInput));
         At(moveState, attackState, new FuncPredicate(() => attackInput));
+
+        At(idleState, dashState, new FuncPredicate(() => IsDashing()));
+        At(moveState, dashState, new FuncPredicate(() => IsDashing()));
+        At(attackState, dashState, new FuncPredicate(() => IsDashing()));
         
-        At(idleState, dashState, new FuncPredicate(() => Dash.Dashing));
-        At(moveState, dashState, new FuncPredicate(() => Dash.Dashing));
-        At(attackState, dashState, new FuncPredicate(() => Dash.Dashing));
-        
-        At(dashState, idleState, new FuncPredicate(() => !Dash.Dashing));
+        At(dashState, idleState, new FuncPredicate(() => !IsDashing()));
         
         At(attackState, idleState, new ActionPredicate(() => !isAttacking, () => attackInput = false));
         
@@ -66,6 +77,13 @@ public class Player : MonoBehaviour
         stateMachine.SetState(idleState);
     }
 
+    private bool IsDashing()
+    {
+        if (!Dash) return false;
+
+        return Dash.Dashing;
+    }
+    
     private void OnEnable()
     {
         input.MoveEvent += MoveInput;
@@ -140,7 +158,6 @@ public class Player : MonoBehaviour
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var dir = (mousePos - transform.position).normalized;
         
-        
         return dir;
     }
 
@@ -178,6 +195,8 @@ public class Player : MonoBehaviour
 
     private void ExecuteDash()
     {
+        if (!Dash) return;
+        
         var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
         var dir = (mousePos - transform.position);

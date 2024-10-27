@@ -12,5 +12,4 @@ public class PickupUI : MonoBehaviour
 
         StartCoroutine(Coroutines.WaitFor(1f, null, () => Destroy(inst.gameObject)));
     }
-
 }
