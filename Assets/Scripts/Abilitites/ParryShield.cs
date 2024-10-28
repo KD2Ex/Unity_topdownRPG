@@ -13,6 +13,6 @@ public class ParryShield : MonoBehaviour
 
         var enemy = other.GetComponentInParent<Enemy>();
         
-        enemy.TakeDamage(0); 
+        enemy.TakeDamage(0);
     }
 }

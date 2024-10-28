@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7a06fb55f20c548b2179155951c926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  set: {fileID: 11400000, guid: 9835a985245b6944bbfc07d808c06db4, type: 2}
   <agent>k__BackingField: {fileID: 7148308713139596358}
   <animator>k__BackingField: {fileID: 1394797607204414181}
   <Drop>k__BackingField: {fileID: 5402678822676941534}

@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -19,6 +15,7 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
     public UnityAction InteractEvent;
     public UnityAction DashEvent;
     public UnityAction ParryEvent;
+    public UnityAction LockEvent;
     
     private static bool WasMoovedThisFrame;
 
@@ -85,6 +82,12 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
         if (!context.started) return;
 
         ParryEvent?.Invoke();
+    }
+
+    public void OnLock(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        LockEvent?.Invoke();
     }
 
     public void OnPause(InputAction.CallbackContext context)

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [SerializeField] private InputReader input;
-    
+    [SerializeField] private LockOnTarget LockOnTarget;
     [field:SerializeField] public MeleeWeapon meleeWeapon { get; private set; }
     [field:SerializeField] public Animator animator { get; private set; }
     [field:SerializeField] public Rigidbody2D rb { get; private set; }
@@ -103,6 +103,7 @@ public class Player : MonoBehaviour
         input.InteractEvent += Interact;
         input.DashEvent += ExecuteDash;
         input.ParryEvent += ExecuteParry;
+        input.LockEvent += Lock;
     }
 
     private void OnDisable()
@@ -112,8 +113,14 @@ public class Player : MonoBehaviour
         input.InteractEvent -= Interact;
         input.DashEvent -= ExecuteDash;
         input.ParryEvent -= ExecuteParry;
+        input.LockEvent -= Lock;
     }
 
+    private void Lock()
+    {
+        LockOnTarget.LockToNearest();
+    }
+    
     public void EnableInput(bool value)
     {
         input.EnablePlayerInput(value);
@@ -169,6 +176,11 @@ public class Player : MonoBehaviour
 
     public Vector2 GetAttackDir()
     {
+        if (LockOnTarget.Locked)
+        {
+            return Vector3.Normalize((LockOnTarget.CrosshairPos - transform.position).normalized);
+        }
+        
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var dir = (mousePos - transform.position).normalized;
         

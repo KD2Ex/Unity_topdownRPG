@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    public EnemyRuntimeSet set;
+    
     [field:SerializeField] public NavMeshAgent agent { get; protected set; }
     [field:SerializeField] public Animator animator { get; protected set; }
     [field:SerializeField] public Drop Drop { get; protected set; }
@@ -40,6 +42,17 @@ public class Enemy : MonoBehaviour
         agent.updateUpAxis = false;
         
         InitializeStates();
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log($"{gameObject.name} enabled");
+        set.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        set.Remove(this);
     }
 
     protected virtual void InitializeStates()
