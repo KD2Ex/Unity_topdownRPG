@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     public readonly int hash_angle = Animator.StringToHash("Angle");
     public readonly int hash_death = Animator.StringToHash("Dead");
 
-    private bool attackInput;
+    public bool attackInput;
     private bool isAttacking;
 
     private Interactable interactable;
@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
         GameManager.instance.Player = this;
         
         stateMachine = new StateMachine();
-        
 
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
@@ -76,7 +75,7 @@ public class Player : MonoBehaviour
         At(moveState, parryState, new FuncPredicate(IsParrying));
         At(parryState, idleState, new FuncPredicate(() => !IsParrying()));
         
-        At(attackState, idleState, new ActionPredicate(() => !isAttacking, () => attackInput = false));
+        At(attackState, idleState, new FuncPredicate(() => !isAttacking));
         
         AtAny(deathState, new FuncPredicate(() => health <= 0));
         

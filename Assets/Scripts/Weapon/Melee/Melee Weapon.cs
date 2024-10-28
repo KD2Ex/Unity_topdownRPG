@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
@@ -13,26 +12,6 @@ public class MeleeWeapon : MonoBehaviour
     private void Awake()
     {
         colliders = new[] {bottom, left, top, right};
-    }
-
-    public void AttackBottom()
-    {
-        EnableOnly(bottom);
-    }
-
-    public void AttackTop()
-    {
-        EnableOnly(top);
-    }
-
-    public void AttackLeft()
-    {
-        EnableOnly(left);
-    }
-
-    public void AttackRight()
-    {
-        EnableOnly(right);
     }
 
     public void Attack(Vector2 dir)

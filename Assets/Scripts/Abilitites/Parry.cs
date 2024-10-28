@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Parry : MonoBehaviour
 {
-    [SerializeField] private GameObject vfx;
     [SerializeField] private GameObject shield;
     [SerializeField] private float time;
 

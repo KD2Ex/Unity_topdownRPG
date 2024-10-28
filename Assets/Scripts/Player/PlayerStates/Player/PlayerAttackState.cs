@@ -18,12 +18,15 @@ public class PlayerAttackState : PlayerBaseState
         player.animator.SetTrigger(player.hash_attack);
         player.meleeWeapon.Attack(dir);
         player.Attacking(true);
+
+        player.attackInput = false;
     }
 
     public override void Update()
     {
         base.Update();
-        
+
+        Debug.Log($"Attack input: {player.attackInput}");
     }
     public override void FixedUpdate()
     {
