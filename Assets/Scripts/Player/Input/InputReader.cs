@@ -16,6 +16,8 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
     public UnityAction DashEvent;
     public UnityAction ParryEvent;
     public UnityAction LockEvent;
+    public UnityAction PauseEvent;
+    
     
     private static bool WasMoovedThisFrame;
 
@@ -92,6 +94,7 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        
+        if (!context.started) return;
+        PauseEvent?.Invoke();
     }
 }
