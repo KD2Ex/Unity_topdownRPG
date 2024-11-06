@@ -1,13 +1,17 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "Inputs", menuName = "SO/Player/Input")]
-public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, PlayerControls.IUIActions
+public class InputReader : ScriptableObject, 
+    PlayerControls.IPlayerActions, 
+    PlayerControls.IUIActions
 {
     private static InputReader instance;
 
     private PlayerControls input;
+    private PlayerInput playerInput;
     
     public  UnityAction<Vector2> MoveEvent;
     public  UnityAction<bool> AttackEvent;
@@ -17,7 +21,8 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
     public UnityAction ParryEvent;
     public UnityAction LockEvent;
     public UnityAction PauseEvent;
-    
+
+    public Action UIEnterEvent;
     
     private static bool WasMoovedThisFrame;
 
@@ -96,5 +101,11 @@ public class InputReader : ScriptableObject, PlayerControls.IPlayerActions, Play
     {
         if (!context.started) return;
         PauseEvent?.Invoke();
+    }
+
+    public void OnSubmit(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        UIEnterEvent?.Invoke();
     }
 }

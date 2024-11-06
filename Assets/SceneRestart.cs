@@ -3,8 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class SceneRestart : MonoBehaviour
 {
-    [SerializeField] private string sceneName;
     [SerializeField] private InputReader input;
+
+    private string sceneName;
+
+    private void Awake()
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            var scene = SceneManager.GetSceneAt(i);
+            if (scene.name == "PersistentGameplay") continue;
+            sceneName = scene.name;
+            break;
+        }
+    }
 
     private void OnEnable()
     {
@@ -18,6 +30,8 @@ public class SceneRestart : MonoBehaviour
 
     private void Restart()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("PersistentGameplay");
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
     }
 }

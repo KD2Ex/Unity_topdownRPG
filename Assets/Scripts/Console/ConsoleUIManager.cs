@@ -4,6 +4,7 @@ public class ConsoleUIManager : MonoBehaviour
 {
     [SerializeField] private InputReader input;
     [SerializeField] private GameObject ui;
+
     private void OnEnable()
     {
         input.PauseEvent += Pause;

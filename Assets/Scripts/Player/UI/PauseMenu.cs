@@ -3,7 +3,7 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private InputReader input;
-
+    
     private void OnEnable()
     {
         input.EnablePlayerInput(false);
