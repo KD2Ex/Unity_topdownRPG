@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FloatVariable timeScale;
     public float TimeScale => timeScale.Value;
     public bool ConsoleOpen;
+
+    [HideInInspector] public Transform PlayerSpawnPoint;
     
     private void Awake()
     {

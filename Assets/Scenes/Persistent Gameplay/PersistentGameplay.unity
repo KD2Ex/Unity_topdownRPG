@@ -155,6 +155,7 @@ MonoBehaviour:
   Drops: {fileID: 0}
   timeScale: {fileID: 11400000, guid: 381ffefd856d03a48bc7c219cef58da7, type: 2}
   ConsoleOpen: 0
+  PlayerSpawnPoint: {fileID: 0}
 --- !u!4 &125640507
 Transform:
   m_ObjectHideFlags: 0
@@ -621,6 +622,9 @@ MonoBehaviour:
   commands:
   - {fileID: 11400000, guid: 63620b0351227cf41b83fcb43dc6202f, type: 2}
   - {fileID: 11400000, guid: 353c8868ad05bd04094e14f7f8834e7e, type: 2}
+  - {fileID: 11400000, guid: 87dc40fb2e76eb54895ba209d623f4e0, type: 2}
+  - {fileID: 11400000, guid: a43bdecff0993bf4fa7373db0ce84925, type: 2}
+  - {fileID: 11400000, guid: fe8b0334b2eea9b4ca55b5f6e02200f6, type: 2}
 --- !u!4 &1094178147
 Transform:
   m_ObjectHideFlags: 0
@@ -960,6 +964,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699041728}
   m_CullTransparentMesh: 1
+--- !u!1 &1705424065
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1705424066}
+  m_Layer: 0
+  m_Name: Level Management
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1705424066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705424065}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 964.575, y: 537.8872, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2027899759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,3 +1471,4 @@ SceneRoots:
   - {fileID: 717630508599737429}
   - {fileID: 2027899761}
   - {fileID: 125640507}
+  - {fileID: 1705424066}

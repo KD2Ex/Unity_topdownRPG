@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -128,7 +129,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
+        OnSceneLoading();
     }
     
     void Update()
@@ -249,6 +250,14 @@ public class Player : MonoBehaviour
     {
         Debug.Log(item.name);
         PickupUI.ShowPickupItem(uiInfo);
+    }
+
+    public void OnSceneLoading()
+    {
+        SceneManager.sceneLoaded += (scene, mode) =>
+        {
+            transform.position = GameManager.instance.PlayerSpawnPoint.position;
+        };
     }
 
     public void Save(ref PlayerSaveData data)
