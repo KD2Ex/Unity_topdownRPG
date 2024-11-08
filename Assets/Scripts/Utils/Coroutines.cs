@@ -11,7 +11,6 @@ public class Coroutines
         var elapsed = 0f;
         float dist;
         
-        
         do
         {
             dist = ( (Vector2) to.position - rb.position).magnitude;
@@ -28,6 +27,12 @@ public class Coroutines
     {
         before?.Invoke();
         yield return new WaitForSeconds(seconds);
+        after?.Invoke();
+    }
+
+    public static IEnumerator WaitForRealTimeSeconds(float seconds, Action after = null)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
         after?.Invoke();
     }
 }

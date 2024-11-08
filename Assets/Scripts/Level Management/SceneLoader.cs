@@ -38,6 +38,18 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator UnloadAndLoad()
     {
+        foreach (var sceneName in scenesToLoad)
+        {
+            Debug.Log(sceneName);
+            var async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+            if (sceneName == sceneToBeActive)
+            {
+                yield return new WaitUntil(() => async.isDone);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToBeActive));
+            }
+        }
+
         foreach (var sceneName in scenesToUnload)
         {
             Debug.Log(sceneName);
@@ -47,14 +59,6 @@ public class SceneLoader : MonoBehaviour
         }
 
         Debug.Log("wtf");
-        
-        foreach (var sceneName in scenesToLoad)
-        {
-            Debug.Log(sceneName);
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        }
-
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToBeActive));
         
         Destroy(gameObject);
     }

@@ -8,7 +8,9 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void Enter()
     {
+        
         base.Enter();
+        if (!enemy.agent.isOnNavMesh) return;
         enemy.agent.ResetPath();
         Debug.Log("Enemy idle state");
     }

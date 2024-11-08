@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    
-    public Player Player;
+
+    public Player Player = null;
     public SaveDrops Drops;
 
     [SerializeField] private FloatVariable timeScale;
@@ -20,6 +21,10 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         
+    }
+
+    private void Start()
+    {
         ApplyTimeScale(TimeScale);
     }
 

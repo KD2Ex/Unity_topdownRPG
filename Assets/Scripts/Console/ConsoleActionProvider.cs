@@ -4,11 +4,28 @@ using UnityEngine.Events;
 public class ConsoleActionProvider : MonoBehaviour
 {
     [SerializeField] private ConsoleAction consoleAction;
+    [SerializeField] private bool executeOnce;
 
+    private bool executed;
+    
     public UnityEvent CommandExecute;
 
-    private void Awake()
+    private void OnEnable()
     {
-        consoleAction.Action += CommandExecute.Invoke;
+        consoleAction.Action += ActionInvocation;
     }
- }
+
+    private void OnDisable()
+    {
+        consoleAction.Action -= ActionInvocation;
+    }
+
+    private void ActionInvocation()
+    {
+        if (executed && executeOnce) return;
+        CommandExecute.Invoke();
+        executed = true;
+
+        //if (executeOnce) enabled = false;
+    }
+}

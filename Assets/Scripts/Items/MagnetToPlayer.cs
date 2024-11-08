@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -11,7 +12,16 @@ public class MagnetToPlayer : MonoBehaviour
     private bool start = false;
     
     private Transform Player => GameManager.instance.Player.transform;
-    
+
+    private void Awake()
+    {
+    }
+
+    private void Start()
+    {
+        //Player = GameManager.instance.Player.transform;
+    }
+
     public void Execute()
     {
         StartCoroutine(Coroutines.MoveTo(Player, rb, 10f));

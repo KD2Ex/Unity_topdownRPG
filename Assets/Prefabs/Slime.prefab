@@ -394,9 +394,11 @@ MonoBehaviour:
   set: {fileID: 11400000, guid: 9835a985245b6944bbfc07d808c06db4, type: 2}
   <agent>k__BackingField: {fileID: 7148308713139596358}
   <animator>k__BackingField: {fileID: 1394797607204414181}
+  <Collider2D>k__BackingField: {fileID: 5354900985779805182}
   <Drop>k__BackingField: {fileID: 5402678822676941534}
   <health>k__BackingField: 100
   attackCooldown: 2
+  infiniteAggroRange: 0
   <attack>k__BackingField: {fileID: 8927490710445093734}
 --- !u!114 &5402678822676941534
 MonoBehaviour:

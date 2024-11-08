@@ -6,13 +6,17 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public EnemyRuntimeSet set;
-    
+    public float originalSpeed { get; private set; }
+    public float originalAccel { get; private set; }
     [field:SerializeField] public NavMeshAgent agent { get; protected set; }
     [field:SerializeField] public Animator animator { get; protected set; }
+    [field:SerializeField] public Collider2D Collider2D { get; protected set; }
     [field:SerializeField] public Drop Drop { get; protected set; }
     [field:SerializeField] public float health { get; protected set; }
+
+    public Rigidbody2D rb { get; private set; }
     
-    public Transform playerTransform { get; private set; }
+    public Transform playerTransform => GameManager.instance.Player.transform;
     protected StateMachine stateMachine;
     protected float distanceToPlayer => (playerTransform.position - transform.position).magnitude;
 
@@ -36,10 +40,16 @@ public class Enemy : MonoBehaviour
     
     private void Awake()
     {
-        playerTransform = FindObjectOfType<Player>()?.transform;
+        TryGetComponent<Rigidbody2D>(out var rb);
+        if (rb) this.rb = rb;
+        
+        //playerTransform = FindObjectOfType<Player>()?.transform;
         Debug.Log($"player pos: {playerTransform.position}");
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+
+        originalSpeed = agent.speed;
+        originalAccel = agent.acceleration;
         
         InitializeStates();
     }
@@ -63,11 +73,11 @@ public class Enemy : MonoBehaviour
     protected void At(IState from, IState to, IPredicate predicate) => stateMachine.AddTransition(from, to, predicate);
     protected void AtAny(IState to, IPredicate predicate) => stateMachine.AddAnyTransition(to, predicate);
 
-    private void Update()
+    protected virtual void Update()
     {
         stateMachine.Update();
 
-        Debug.Log(stateMachine.CurrentState.ToString());
+        //Debug.Log(stateMachine.CurrentState.ToString());
     }
 
     private void FixedUpdate()
@@ -115,6 +125,22 @@ public class Enemy : MonoBehaviour
     public void HitEnded()
     {
         hited = false;
+    }
+
+    public Vector3 Move()
+    {
+        var pos = new Vector3(playerTransform.position.x, playerTransform.position.y, 0f);
+        
+        if (rb)
+        {
+            var dir = pos - transform.position;
+            rb.MovePosition(transform.position + dir.normalized * (15f * Time.unscaledDeltaTime));
+
+            return dir;
+        }
+
+        agent.SetDestination(pos);
+        return agent.velocity;
     }
     
 }

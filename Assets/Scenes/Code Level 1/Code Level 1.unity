@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleAction: {fileID: 11400000, guid: 48188207baaaba645aabecc3ab81bd34, type: 2}
+  executeOnce: 1
   CommandExecute:
     m_PersistentCalls:
       m_Calls:
@@ -2513,6 +2514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleAction: {fileID: 11400000, guid: 5537d708f3830f54c864341b9b4ac32d, type: 2}
+  executeOnce: 0
   CommandExecute:
     m_PersistentCalls:
       m_Calls:

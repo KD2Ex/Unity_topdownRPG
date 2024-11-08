@@ -49,7 +49,10 @@ public class Player : MonoBehaviour
     
     private void Awake()
     {
-        GameManager.instance.Player = this;
+        if (GameManager.instance.Player == null)
+        {
+            GameManager.instance.Player = this;
+        }
         
         stateMachine = new StateMachine();
 
@@ -201,11 +204,13 @@ public class Player : MonoBehaviour
         mousePos.z = 0f;
         var dir = (mousePos - transform.position);
 
+        /*
         Debug.Log("dir" + dir);
         Debug.Log("dir.normalized" + dir.normalized);
         Debug.Log("V3Normalize dir" + Vector3.Normalize(dir));
         Debug.Log("V3 dir.normalized" + Vector3.Normalize(dir.normalized));
         Debug.Log("dir.normalized.normalized" + dir.normalized.normalized);
+        */
         
         
         Dash.Execute(dir.normalized);
@@ -256,6 +261,8 @@ public class Player : MonoBehaviour
     {
         SceneManager.sceneLoaded += (scene, mode) =>
         {
+            if (!GameManager.instance.PlayerSpawnPoint) return;
+            if (!this) return;
             transform.position = GameManager.instance.PlayerSpawnPoint.position;
         };
     }
