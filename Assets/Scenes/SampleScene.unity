@@ -966,10 +966,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenesToLoad:
-  - Code Level 1
+  - m_SceneAsset: {fileID: 102900000, guid: 7a552ba6c5c92394187fcec67dbd6098, type: 3}
+    m_SceneName: Code Level 1
   scenesToUnload:
-  - SampleScene
-  sceneToBeActive: Code Level 1
+  - m_SceneAsset: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
+    m_SceneName: SampleScene
 --- !u!4 &645389491
 Transform:
   m_ObjectHideFlags: 0
@@ -998,6 +999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleAction: {fileID: 11400000, guid: e2d3322385aaeec488f2c0ee9c13b3f2, type: 2}
+  executeOnce: 0
   CommandExecute:
     m_PersistentCalls:
       m_Calls:
@@ -1823,6 +1825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleAction: {fileID: 11400000, guid: ecffbcbd728bb4c409b9401665b33938, type: 2}
+  executeOnce: 0
   CommandExecute:
     m_PersistentCalls:
       m_Calls:
@@ -1851,6 +1854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleAction: {fileID: 11400000, guid: 2c1d849edb12996479c73e83f7e64a08, type: 2}
+  executeOnce: 0
   CommandExecute:
     m_PersistentCalls:
       m_Calls:
@@ -16176,6 +16180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consoleAction: {fileID: 11400000, guid: ecffbcbd728bb4c409b9401665b33938, type: 2}
+  executeOnce: 0
   CommandExecute:
     m_PersistentCalls:
       m_Calls:

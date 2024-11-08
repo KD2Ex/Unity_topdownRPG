@@ -1,14 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private string[] scenesToLoad;
-    [SerializeField] private string[] scenesToUnload;
+    [SerializeField] private SceneField[] scenesToLoad;
+    [SerializeField] private SceneField[] scenesToUnload;
 
-    [SerializeField] private string sceneToBeActive;
-
+    private List<AsyncOperation> asyncOperations = new();
+    
     private void Awake()
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -41,12 +42,20 @@ public class SceneLoader : MonoBehaviour
         foreach (var sceneName in scenesToLoad)
         {
             Debug.Log(sceneName);
-            var async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
+            asyncOperations.Add(SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive));
+            
+            /*
             if (sceneName == sceneToBeActive)
             {
-                yield return new WaitUntil(() => async.isDone);
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToBeActive));
+            }*/
+        }
+        
+        for (int i = 0; i < asyncOperations.Count; i++)
+        {
+            while (!asyncOperations[i].isDone)
+            {
+                yield return null;
             }
         }
 

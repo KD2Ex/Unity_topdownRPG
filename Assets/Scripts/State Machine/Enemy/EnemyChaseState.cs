@@ -21,10 +21,6 @@ public class EnemyChaseState : EnemyBaseState
 
         //enemy.agent.Move(enemy.transform * 7f * Time.unscaledDeltaTime);
         //enemy.agent.SetDestination(pos);
-        
-        
-        Debug.Log($"Velocity: {enemy.agent.velocity.magnitude}");
-        
     }
     public override void FixedUpdate()
     {

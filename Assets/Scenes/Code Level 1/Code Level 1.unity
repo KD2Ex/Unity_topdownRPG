@@ -2482,10 +2482,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenesToLoad:
-  - SampleScene
+  - m_SceneAsset: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
+    m_SceneName: SampleScene
   scenesToUnload:
-  - Code Level 1
-  sceneToBeActive: SampleScene
+  - m_SceneAsset: {fileID: 102900000, guid: 7a552ba6c5c92394187fcec67dbd6098, type: 3}
+    m_SceneName: Code Level 1
 --- !u!4 &1689021634
 Transform:
   m_ObjectHideFlags: 0
