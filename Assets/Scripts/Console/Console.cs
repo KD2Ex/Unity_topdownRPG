@@ -10,7 +10,7 @@ public class Console : MonoBehaviour
     {
         foreach (var command in commands)
         {
-            var exists = command.CommandAliases.Items.Exists((name) => name.alias == alias);
+            var exists = command.CommandAliases.Items.Exists((name) => name == alias);
             if (exists)
             {
                 if (!ActionsCheck(command.Actions)) continue;

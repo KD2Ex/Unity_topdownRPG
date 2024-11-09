@@ -22,7 +22,6 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name);
         var player = other.GetComponentInParent<Player>();
         if (!player) return;
         

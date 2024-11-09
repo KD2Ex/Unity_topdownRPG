@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: Alias Slow Time
   m_EditorClassIdentifier: 
   Items:
-  - locale: 0
-    alias: "\u0417\u0430\u043C\u0435\u0434\u043B\u0438\u0442\u044C \u0432\u0440\u0435\u043C\u044F"
-  - locale: 1
-    alias: Slow time
-  - locale: 1
-    alias: "\u0417\u0430\u043C\u0435\u0434\u043B\u0438\u0442\u044C"
-  - locale: 1
-    alias: Slow
+  - Slow time
+  - Slow
+  - "\u0417\u0430\u043C\u0435\u0434\u043B\u0438\u0442\u044C \u0432\u0440\u0435\u043C\u044F"
+  - "\u0417\u0430\u043C\u0435\u0434\u043B\u0438\u0442\u044C"

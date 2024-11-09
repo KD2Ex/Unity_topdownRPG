@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Alias Revert Time Slowing
   m_EditorClassIdentifier: 
   Items:
-  - locale: 0
-    alias: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C \u0432\u0440\u0435\u043C\u044F"
-  - locale: 1
-    alias: Revert time
+  - Revert time
+  - Revert
+  - "\u0412\u0435\u0440\u043D\u0443\u0442\u044C \u0432\u0440\u0435\u043C\u044F"
+  - "\u0412\u0435\u0440\u043D\u0443\u0442\u044C"

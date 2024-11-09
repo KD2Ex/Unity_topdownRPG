@@ -26,7 +26,7 @@ public class PlayerAttackState : PlayerBaseState
     {
         base.Update();
 
-        Debug.Log($"Attack input: {player.attackInput}");
+        //Debug.Log($"Attack input: {player.attackInput}");
     }
     public override void FixedUpdate()
     {
