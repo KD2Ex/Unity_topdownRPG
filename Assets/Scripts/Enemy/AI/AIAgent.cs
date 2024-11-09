@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using Unity.VisualScripting.Dependencies.NCalc;
+﻿using System.Collections;
 using UnityEngine;
 
 public class AIAgent : MonoBehaviour
