@@ -1,11 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class NPC : Interactable
+public class NPC : MonoBehaviour // Interactable
 {
     [SerializeField] private VideoSequence sequence;
-    
-    public override void Interact()
+
+    private void Awake()
     {
-        sequence.PlayNext();
+        sequence.enabled = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        sequence.enabled = true;
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        sequence.enabled = false;
+    }
+    
 }

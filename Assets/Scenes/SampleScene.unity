@@ -1393,12 +1393,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586770b2884c4da089bce596a47bbf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 11400000, guid: 55491d1981964e54fbc396342c487e56, type: 2}
   vods:
   - VideoPlayer: {fileID: 1146220757}
     AutoPlayNext: 0
   - VideoPlayer: {fileID: 1350447894}
     AutoPlayNext: 1
   rawImage: {fileID: 1922163359}
+  OnSequenceEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &592230307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1411,8 +1415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78c3e72d96c04ae698099e19922e5053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hint: {fileID: 0}
-  clip: {fileID: 0}
   sequence: {fileID: 592230306}
 --- !u!1 &645389489
 GameObject:
@@ -2586,17 +2588,31 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1153107324}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 586770b2884c4da089bce596a47bbf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 11400000, guid: 55491d1981964e54fbc396342c487e56, type: 2}
   vods:
   - VideoPlayer: {fileID: 2044873897}
     AutoPlayNext: 1
-  - VideoPlayer: {fileID: 2044873897}
-    AutoPlayNext: 1
   rawImage: {fileID: 1922163359}
+  OnSequenceEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1153107326}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1153107327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2614,6 +2630,18 @@ MonoBehaviour:
   CommandExecute:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1153107326}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1153107326}
         m_TargetAssemblyTypeName: VideoSequence, Assembly-CSharp
         m_MethodName: PlayNext
@@ -17211,12 +17239,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586770b2884c4da089bce596a47bbf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 11400000, guid: 55491d1981964e54fbc396342c487e56, type: 2}
   vods:
   - VideoPlayer: {fileID: 1790312495}
     AutoPlayNext: 0
   - VideoPlayer: {fileID: 1007279244}
     AutoPlayNext: 1
   rawImage: {fileID: 1922163359}
+  OnSequenceEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1762364935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17229,8 +17261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78c3e72d96c04ae698099e19922e5053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hint: {fileID: 0}
-  clip: {fileID: 0}
   sequence: {fileID: 1762364934}
 --- !u!58 &1762364936
 CircleCollider2D:

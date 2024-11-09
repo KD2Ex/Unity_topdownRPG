@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Transactions;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -14,11 +14,15 @@ public struct Video
 
 public class VideoSequence : MonoBehaviour
 {
+    [SerializeField] private InputReader input;
+    
     [SerializeField] private Video[] vods;
     [SerializeField] private RawImage rawImage;
 
     private VideoPlayer playing;
     private byte current = 0;
+
+    public UnityEvent OnSequenceEnd;
     
     private void Awake()
     {
@@ -34,6 +38,16 @@ public class VideoSequence : MonoBehaviour
                 PlayNext();
             };
         }
+    }
+
+    private void OnEnable()
+    {
+        input.InteractEvent += PlayNext;
+    }
+
+    private void OnDisable()
+    {
+        input.InteractEvent -= PlayNext;
     }
 
     private Coroutine coroutine;
@@ -68,6 +82,8 @@ public class VideoSequence : MonoBehaviour
             
             Time.timeScale = 1f;
             current = 0;
+            
+            OnSequenceEnd?.Invoke();
             
             return;
         }
