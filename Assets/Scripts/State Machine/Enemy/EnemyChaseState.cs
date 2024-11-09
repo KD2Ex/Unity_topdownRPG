@@ -3,9 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyChaseState : EnemyBaseState
 {
-    private NavMeshPath path;
-    private int currentPathIndex = 0;
-    private Vector3 previousPosition;
+
     public EnemyChaseState(Enemy enemy) : base(enemy)
     {
     }

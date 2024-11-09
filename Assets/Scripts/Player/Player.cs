@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     [field:SerializeField] public MeleeWeapon meleeWeapon { get; private set; }
     [field:SerializeField] public Animator animator { get; private set; }
     [field:SerializeField] public Rigidbody2D rb { get; private set; }
-    [field:SerializeField] public float moveSpeed { get; private set; }
+    [field:SerializeField] public FloatVariable moveSpeed { get; private set; }
+    [SerializeField] private Vector3Data Velocity;
     [field:SerializeField] public float health { get; private set; }
 
     [field:SerializeField] public PickupUI PickupUI { get; private set; }
@@ -46,6 +47,11 @@ public class Player : MonoBehaviour
     PlayerDeathState deathState;
     PlayerDashState dashState;
     PlayerParryState parryState;
+
+    public void SetVelocityData(Vector3 value)
+    {
+        Velocity.Value = value;
+    }
     
     private void Awake()
     {

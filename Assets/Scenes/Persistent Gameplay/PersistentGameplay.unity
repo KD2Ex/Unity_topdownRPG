@@ -1024,6 +1024,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 210349308}
+    - target: {fileID: 1806215052094625158, guid: 2db85e83843d2044f8121b4cadfe99dc, type: 3}
+      propertyPath: Velocity
+      value: 
+      objectReference: {fileID: 11400000, guid: 108cb8074bb90ea4192337581befb2bd, type: 2}
+    - target: {fileID: 1806215052094625158, guid: 2db85e83843d2044f8121b4cadfe99dc, type: 3}
+      propertyPath: <Velocity>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 108cb8074bb90ea4192337581befb2bd, type: 2}
+    - target: {fileID: 1806215052094625158, guid: 2db85e83843d2044f8121b4cadfe99dc, type: 3}
+      propertyPath: <moveSpeed>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 8546c63d1fc34e54396276fec7062f4e, type: 2}
     - target: {fileID: 2169433856328640007, guid: 2db85e83843d2044f8121b4cadfe99dc, type: 3}
       propertyPath: m_Name
       value: Player

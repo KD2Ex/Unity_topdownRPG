@@ -33,8 +33,11 @@ public class SceneLoader : MonoBehaviour
 
     public void Execute()
     {
-        DontDestroyOnLoad(gameObject);
-        StartCoroutine(UnloadAndLoad());
+        LoadScenes();
+        UnloadScenes();
+        
+        /*DontDestroyOnLoad(gameObject);
+        StartCoroutine(UnloadAndLoad());*/
     }
 
     private IEnumerator UnloadAndLoad()
@@ -72,6 +75,25 @@ public class SceneLoader : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void LoadScenes()
+    {
+        foreach (var sceneName in scenesToLoad)
+        {
+            Debug.Log(sceneName);
+            asyncOperations.Add(SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive));
+        }
+    }
+    
+    private void UnloadScenes()
+    {
+        foreach (var sceneName in scenesToUnload)
+        {
+            Debug.Log(sceneName);
+            var async = SceneManager.UnloadSceneAsync(sceneName);
+            //StartCoroutine(LogProgress(async));
+        }
+    }
+    
     private IEnumerator LogProgress(AsyncOperation async)
     {
         Debug.Log(async.progress);

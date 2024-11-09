@@ -6,7 +6,6 @@ public class SlimeAttackState :  EnemyBaseState
     private float cooldown;
     private Slime slime;
     private bool attacked;
-
     
     public SlimeAttackState(Slime enemy, float cooldown) : base(enemy)
     {

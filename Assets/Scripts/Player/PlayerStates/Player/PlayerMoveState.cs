@@ -9,9 +9,6 @@ public class PlayerMoveState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
-        
-        
-        
     }
 
     public override void Update()
@@ -27,13 +24,18 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void FixedUpdate()
     {
-        player.rb.MovePosition((Vector2)player.transform.position + player.moveDirection * (player.moveSpeed * Time.deltaTime));
+        var velocity = player.moveDirection * (player.moveSpeed.Value * Time.deltaTime);
+        
+        player.rb.MovePosition((Vector2)player.transform.position + velocity);
+        player.SetVelocityData(velocity);
+        
         base.FixedUpdate();
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.SetVelocityData(Vector3.zero);
         player.animator.SetFloat(player.hash_X, 0f);
         player.animator.SetFloat(player.hash_Y, 0f);
     }
