@@ -328,6 +328,34 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Cutscene"",
+            ""id"": ""71d68360-77c6-49ac-93b7-d2a1f8f40743"",
+            ""actions"": [
+                {
+                    ""name"": ""CutsceneInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""efb997c1-1efc-4ac5-9682-289edb12d8c9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4c50e172-0eca-447d-a5d1-7880fa40301b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MnK"",
+                    ""action"": ""CutsceneInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -368,6 +396,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
+        // Cutscene
+        m_Cutscene = asset.FindActionMap("Cutscene", throwIfNotFound: true);
+        m_Cutscene_CutsceneInteract = m_Cutscene.FindAction("CutsceneInteract", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -573,6 +604,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Cutscene
+    private readonly InputActionMap m_Cutscene;
+    private List<ICutsceneActions> m_CutsceneActionsCallbackInterfaces = new List<ICutsceneActions>();
+    private readonly InputAction m_Cutscene_CutsceneInteract;
+    public struct CutsceneActions
+    {
+        private @PlayerControls m_Wrapper;
+        public CutsceneActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CutsceneInteract => m_Wrapper.m_Cutscene_CutsceneInteract;
+        public InputActionMap Get() { return m_Wrapper.m_Cutscene; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CutsceneActions set) { return set.Get(); }
+        public void AddCallbacks(ICutsceneActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CutsceneActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CutsceneActionsCallbackInterfaces.Add(instance);
+            @CutsceneInteract.started += instance.OnCutsceneInteract;
+            @CutsceneInteract.performed += instance.OnCutsceneInteract;
+            @CutsceneInteract.canceled += instance.OnCutsceneInteract;
+        }
+
+        private void UnregisterCallbacks(ICutsceneActions instance)
+        {
+            @CutsceneInteract.started -= instance.OnCutsceneInteract;
+            @CutsceneInteract.performed -= instance.OnCutsceneInteract;
+            @CutsceneInteract.canceled -= instance.OnCutsceneInteract;
+        }
+
+        public void RemoveCallbacks(ICutsceneActions instance)
+        {
+            if (m_Wrapper.m_CutsceneActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICutsceneActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CutsceneActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CutsceneActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CutsceneActions @Cutscene => new CutsceneActions(this);
     private int m_MnKSchemeIndex = -1;
     public InputControlScheme MnKScheme
     {
@@ -605,5 +682,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnPause(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
+    }
+    public interface ICutsceneActions
+    {
+        void OnCutsceneInteract(InputAction.CallbackContext context);
     }
 }

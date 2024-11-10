@@ -42,12 +42,12 @@ public class VideoSequence : MonoBehaviour
 
     private void OnEnable()
     {
-        input.InteractEvent += PlayNext;
+        input.CutsceneInteractEvent += PlayNext;
     }
 
     private void OnDisable()
     {
-        input.InteractEvent -= PlayNext;
+        input.CutsceneInteractEvent -= PlayNext;
     }
 
     private Coroutine coroutine;

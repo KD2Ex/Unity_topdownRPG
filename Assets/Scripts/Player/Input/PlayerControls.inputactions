@@ -306,6 +306,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Cutscene",
+            "id": "71d68360-77c6-49ac-93b7-d2a1f8f40743",
+            "actions": [
+                {
+                    "name": "CutsceneInteract",
+                    "type": "Button",
+                    "id": "efb997c1-1efc-4ac5-9682-289edb12d8c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4c50e172-0eca-447d-a5d1-7880fa40301b",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MnK",
+                    "action": "CutsceneInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

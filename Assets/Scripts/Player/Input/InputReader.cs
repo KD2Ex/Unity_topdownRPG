@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 [CreateAssetMenu(fileName = "Inputs", menuName = "SO/Player/Input")]
 public class InputReader : ScriptableObject, 
     PlayerControls.IPlayerActions, 
-    PlayerControls.IUIActions
+    PlayerControls.IUIActions,
+    PlayerControls.ICutsceneActions
 {
     private static InputReader instance;
 
@@ -23,6 +24,7 @@ public class InputReader : ScriptableObject,
     public UnityAction PauseEvent;
 
     public Action UIEnterEvent;
+    public Action CutsceneInteractEvent;
     
     private static bool WasMoovedThisFrame;
 
@@ -50,6 +52,7 @@ public class InputReader : ScriptableObject,
             
             input.Player.SetCallbacks(this);
             input.UI.SetCallbacks(this);
+            input.Cutscene.SetCallbacks(this);
         }
         
         input.Enable();
@@ -117,5 +120,11 @@ public class InputReader : ScriptableObject,
     {
         if (!context.started) return;
         UIEnterEvent?.Invoke();
+    }
+
+    public void OnCutsceneInteract(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        CutsceneInteractEvent?.Invoke();
     }
 }
