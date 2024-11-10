@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu (fileName = "Command", menuName = "SO/Console/Command")]
 public class ConsoleCommand : ScriptableObject
 {
     public CommandAlias CommandAliases;

@@ -31,6 +31,16 @@ public class InputReader : ScriptableObject,
         if (value) input.Player.Enable();
         else input.Player.Disable();
     }
+
+    public void EnableUIInput()
+    {
+        input.UI.Enable();
+    }
+
+    public void DisableUIInput()
+    {
+        input.UI.Disable();
+    }
     
     private void OnEnable()
     {

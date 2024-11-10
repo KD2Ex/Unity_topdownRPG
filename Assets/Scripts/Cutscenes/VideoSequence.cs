@@ -62,7 +62,7 @@ public class VideoSequence : MonoBehaviour
         if (!rawImage.gameObject.activeInHierarchy)
         {
             rawImage.gameObject.SetActive(true);
-            Time.timeScale = 0f;
+            GameManager.instance.PauseTime();
         }
         
         if (playing) playing.Stop();
@@ -80,15 +80,17 @@ public class VideoSequence : MonoBehaviour
             
             PrepareVods();
             
-            Time.timeScale = 1f;
+            GameManager.instance.UnpauseTime();
             current = 0;
             
             OnSequenceEnd?.Invoke();
-            
+            input.EnableUIInput();
+            input.EnablePlayerInput(true);
             return;
         }
 
-
+        input.DisableUIInput();
+        input.EnablePlayerInput(false);
         vods[current].VideoPlayer.Play();
         playing = vods[current].VideoPlayer;
 
