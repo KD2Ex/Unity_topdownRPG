@@ -14,7 +14,7 @@ public class InputReader : ScriptableObject,
     private PlayerControls input;
     private PlayerInput playerInput;
     
-    public  UnityAction<Vector2> MoveEvent;
+    public Action<Vector2> MoveEvent;
     public  UnityAction<bool> AttackEvent;
     public UnityAction DevEvent;
     public UnityAction InteractEvent;
@@ -28,10 +28,15 @@ public class InputReader : ScriptableObject,
     
     private static bool WasMoovedThisFrame;
 
-    public void EnablePlayerInput(bool value)
+    public void EnablePlayerInput()
     {
-        if (value) input.Player.Enable();
-        else input.Player.Disable();
+        input.Player.Enable();
+
+    }
+
+    public void DisablePlayerInput()
+    {
+        input.Player.Disable();
     }
 
     public void EnableUIInput()
@@ -63,10 +68,16 @@ public class InputReader : ScriptableObject,
         input.Disable();
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    /*public void OnMove(InputAction.CallbackContext context)
     {
         if (context.started) return;
         
+        var value = context.ReadValue<Vector2>();
+        MoveEvent?.Invoke(value);
+    }*/
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
         var value = context.ReadValue<Vector2>();
         MoveEvent?.Invoke(value);
     }

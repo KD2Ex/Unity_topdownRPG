@@ -85,12 +85,12 @@ public class VideoSequence : MonoBehaviour
             
             OnSequenceEnd?.Invoke();
             input.EnableUIInput();
-            input.EnablePlayerInput(true);
+            input.EnablePlayerInput();
             return;
         }
 
         input.DisableUIInput();
-        input.EnablePlayerInput(false);
+        input.DisablePlayerInput();
         vods[current].VideoPlayer.Play();
         playing = vods[current].VideoPlayer;
 

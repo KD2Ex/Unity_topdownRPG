@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +8,6 @@ public class ConsoleActionProvider : MonoBehaviour
     [SerializeField] private bool executeOnce;
 
     private bool executed;
-    
     public UnityEvent CommandExecute;
 
     private void OnEnable()

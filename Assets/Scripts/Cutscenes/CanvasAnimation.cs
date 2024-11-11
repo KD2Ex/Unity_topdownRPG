@@ -7,14 +7,14 @@ public class CanvasAnimation : MonoBehaviour
     
     private void OnEnable()
     {
-        input.EnablePlayerInput(false);
+        input.DisablePlayerInput();
         input.DisableUIInput();
         Time.timeScale = 0f;
     }
 
     private void OnDisable()
     {
-        input.EnablePlayerInput(true);
+        input.EnablePlayerInput();
         input.EnableUIInput();
         Time.timeScale = 1f;
     }
@@ -22,6 +22,13 @@ public class CanvasAnimation : MonoBehaviour
     private void Update()
     {
         var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.normalizedTime > 1f) gameObject.SetActive(false);
+        if (stateInfo.normalizedTime > 1f)
+        {
+            gameObject.SetActive(false);
+
+            Vector2 vector;
+            
+            
+        }
     }
 }

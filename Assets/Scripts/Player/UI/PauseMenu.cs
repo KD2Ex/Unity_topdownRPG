@@ -6,13 +6,13 @@ public class PauseMenu : MonoBehaviour
     
     private void OnEnable()
     {
-        input.EnablePlayerInput(false);
+        input.DisablePlayerInput();
         GameManager.instance.PauseTime();
     }
 
     private void OnDisable()
     {
-        input.EnablePlayerInput(true);
+        input.EnablePlayerInput();
         GameManager.instance.UnpauseTime();
     }
 }

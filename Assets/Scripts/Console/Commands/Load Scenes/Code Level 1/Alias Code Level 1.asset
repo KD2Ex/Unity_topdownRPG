@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Alias Code Level 1
   m_EditorClassIdentifier: 
   Items:
-  - locale: 0
-    alias: 112233
+  - 112233

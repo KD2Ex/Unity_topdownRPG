@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9e4875e1ec94fc7b86aa8d99bc1c144, type: 3}
-  m_Name: Alias SampleScene
+  m_Script: {fileID: 11500000, guid: 034380c0e299469890941e8ec25a672e, type: 3}
+  m_Name: C Some command
   m_EditorClassIdentifier: 
-  Items:
-  - 123
+  CommandAliases: {fileID: 11400000, guid: ab9d154c385b39e4881a3954e62a9368, type: 2}
+  Actions:
+  - {fileID: 11400000, guid: afa43354c03dd1a4e9f3694b1045f87e, type: 2}

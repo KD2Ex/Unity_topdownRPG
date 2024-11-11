@@ -237,6 +237,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""4b504de5-3824-4cf1-88e6-946152ae1b6b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4319298e-7dc7-4c3d-95c3-8e01994a2814"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",

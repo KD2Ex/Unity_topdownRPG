@@ -133,7 +133,14 @@ public class Player : MonoBehaviour
     
     public void EnableInput(bool value)
     {
-        input.EnablePlayerInput(value);
+        if (value)
+        {
+            input.EnablePlayerInput();
+        }
+        else
+        {
+            input.DisablePlayerInput();
+        }
     }
 
     void Start()
@@ -166,6 +173,7 @@ public class Player : MonoBehaviour
     
     private void MoveInput(Vector2 value)
     {
+        Debug.Log($"MOve input in {gameObject.name}, value: {value}");
         moveDirection = value;
         if (value.magnitude < 0.01f) return;
         lastMoveDirection = value;
