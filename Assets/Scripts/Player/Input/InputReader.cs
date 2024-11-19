@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -78,6 +79,10 @@ public class InputReader : ScriptableObject,
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        Debug.Log(context.started);
+        Debug.Log(context.performed);
+        Debug.Log(context.canceled);
+        
         var value = context.ReadValue<Vector2>();
         MoveEvent?.Invoke(value);
     }

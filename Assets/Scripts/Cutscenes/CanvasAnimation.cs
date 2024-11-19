@@ -25,10 +25,6 @@ public class CanvasAnimation : MonoBehaviour
         if (stateInfo.normalizedTime > 1f)
         {
             gameObject.SetActive(false);
-
-            Vector2 vector;
-            
-            
         }
     }
 }

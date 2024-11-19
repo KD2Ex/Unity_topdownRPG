@@ -17,14 +17,14 @@ public abstract class Interactable : MonoBehaviour
 
     public abstract void Interact();
     
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        OnEnter(other);
+        //OnEnter(other);
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
-        OnExit(other);
+        //OnExit(other);
     }
     
     public virtual void OnEnter(Collider2D other)
