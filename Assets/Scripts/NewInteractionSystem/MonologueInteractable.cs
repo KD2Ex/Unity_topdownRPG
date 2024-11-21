@@ -5,7 +5,8 @@ namespace NewInteractionSystem
     public class MonologueInteractable : Interactable
     {
         [SerializeField] private GameObject monologueGameObject;
-
+        [SerializeField] private bool BlockInput;
+        
         public bool BlockInteraction { get; set; }
         
         public override void Interact()
@@ -19,15 +20,18 @@ namespace NewInteractionSystem
             }
             
             monologueGameObject.SetActive(!monologueGameObject.activeInHierarchy);
+            /*if (BlockInput)
+            {
+                if (monologueGameObject.activeInHierarchy)
+                {
+                    input.DisablePlayerInput();
+                }
+                else
+                {
+                    input.EnablePlayerInput();
+                }
+            }*/
 
-            if (monologueGameObject.activeInHierarchy)
-            {
-                input.DisablePlayerInput();
-            }
-            else
-            {
-                input.EnablePlayerInput();
-            }
         }
     }
 }
