@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class Console : MonoBehaviour
 {
-    [SerializeField] private List<ConsoleCommand> commands;
+    [SerializeField] private List<ScriptableConsoleCommand> commands;
     
     public bool TryExecute(string alias)
     {
         foreach (var command in commands)
         {
-            var exists = command.CommandAliases.Items.Exists((name) => name == alias);
-            if (exists)
-            {
-                if (!ActionsCheck(command.Actions)) continue;
+            //var exists = command.Aliases.Items.Exists((name) => name == alias);
+            if (!command.HasAlias(alias)) continue;
+            if (!command.CanExecute()) continue;
                 
-                StartCoroutine(QueueCommand(command));
-                return true;
-            }
+            StartCoroutine(QueueCommand(command));
+            return true;
         }
 
         Debug.LogWarning($"Command {alias} not found");
@@ -40,7 +38,7 @@ public class Console : MonoBehaviour
         return false;
     }
     
-    private IEnumerator QueueCommand(ConsoleCommand commandToExec)
+    private IEnumerator QueueCommand(ScriptableConsoleCommand commandToExec)
     {
         yield return new WaitUntil(() => !GameManager.instance.ConsoleOpen);
         commandToExec.Execute();

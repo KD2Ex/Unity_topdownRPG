@@ -26,7 +26,7 @@ public class AIAgent : MonoBehaviour
         
         
         var dir = position - transform.position;
-        Debug.Log($"{gameObject.name} dir mag: {dir.magnitude}");
+        //Debug.Log($"{gameObject.name} dir mag: {dir.magnitude}");
         if (dir.magnitude < .05f) return;
         rb.MovePosition(transform.position + Vector3.Normalize(dir) * (moveSpeed * Time.deltaTime));
 

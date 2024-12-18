@@ -28,6 +28,12 @@ public class Dash : MonoBehaviour
         StartCoroutine(PerformDash(dir, force, time));
     }
 
+    public void Execute(Vector2 dir, Transform target)
+    {
+        StopAllCoroutines();
+        StartCoroutine(DashToTarget(dir, target));
+    }
+
     private IEnumerator PerformDash(Vector2 dir, float force, float time)
     {
         var elapsed = 0f;
@@ -42,5 +48,21 @@ public class Dash : MonoBehaviour
         }
 
         Dashing = false;
+    }
+
+    private IEnumerator DashToTarget(Vector2 dir, Transform target)
+    {
+        float distance;
+        //Dashing = true;
+        do
+        {
+            distance = Vector3.Distance(transform.position, target.position);
+            Debug.Log(distance);
+            rb.MovePosition(transform.position + (Vector3) dir * (force * .5f * Time.deltaTime));
+            yield return new WaitForFixedUpdate();
+        } while (distance > 2f);
+        Debug.Log(distance);
+        rb.velocity = Vector3.zero;
+        //Dashing = false;
     }
 }

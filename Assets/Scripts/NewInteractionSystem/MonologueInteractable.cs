@@ -11,6 +11,7 @@ namespace NewInteractionSystem
         
         public override void Interact()
         {
+            base.Interact();
             if (BlockInteraction) return;
             if (executeOnce && triggered)
             {

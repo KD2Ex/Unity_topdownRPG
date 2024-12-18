@@ -19,21 +19,23 @@ public abstract class Interactable : MonoBehaviour
     
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        //OnEnter(other);
+        OnEnter(other);
     }
 
     protected virtual void OnTriggerExit2D(Collider2D other)
     {
-        //OnExit(other);
+        OnExit(other);
     }
     
     public virtual void OnEnter(Collider2D other)
     {
         if (interacted) return;
-        if (!other.gameObject.CompareTag("Player")) return;
+        if (!other.CompareTag("Player")) return;
         
         if (hint)
             hint.SetActive(true);
+        
+        
         player.SetInteractable(this);
     }
     public virtual void OnExit(Collider2D other)

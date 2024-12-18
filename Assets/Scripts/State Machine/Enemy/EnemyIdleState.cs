@@ -12,7 +12,7 @@ public class EnemyIdleState : EnemyBaseState
         base.Enter();
         if (!enemy.agent.isOnNavMesh) return;
         enemy.agent.ResetPath();
-        Debug.Log("Enemy idle state");
+        //Debug.Log("Enemy idle state");
     }
 
     public override void Update()

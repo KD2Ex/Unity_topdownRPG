@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034380c0e299469890941e8ec25a672e, type: 3}
   m_Name: C SampleScene
   m_EditorClassIdentifier: 
-  CommandAliases: {fileID: 11400000, guid: f9d7ca541cc156942a1140a09cd60f1c, type: 2}
+  Aliases: {fileID: 11400000, guid: f9d7ca541cc156942a1140a09cd60f1c, type: 2}
   Actions:
   - {fileID: 11400000, guid: 5537d708f3830f54c864341b9b4ac32d, type: 2}

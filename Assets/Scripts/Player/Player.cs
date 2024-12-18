@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour
     [field:SerializeField] public float health { get; private set; }
 
     [field:SerializeField] public PickupUI PickupUI { get; private set; }
+    [field:SerializeField] public PlayerSensor PlayerSensor { get; private set; }
     
     [Space]
     
@@ -173,7 +176,7 @@ public class Player : MonoBehaviour
     
     private void MoveInput(Vector2 value)
     {
-        Debug.Log($"MOve input in {gameObject.name}, value: {value}");
+        //Debug.Log($"MOve input in {gameObject.name}, value: {value}");
         moveDirection = value;
         if (value.magnitude < 0.01f) return;
         lastMoveDirection = value;
@@ -182,6 +185,9 @@ public class Player : MonoBehaviour
     private void AttackInput(bool value)
     {
         attackInput = value;
+        if (value)
+        {
+        }
     }
 
     public void Attacking(bool value) => isAttacking = value;
@@ -209,6 +215,16 @@ public class Player : MonoBehaviour
     {
         return (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
     }
+
+    public void DashToTarget(Vector2 dir, Transform target)
+    {
+        Dash.Execute(dir, target);
+    }
+
+    public void StartWaitCoroutine(float time, Action callback)
+    {
+        StartCoroutine(Coroutines.WaitFor(time, null, callback));
+    }
     
     private void ExecuteDash()
     {
@@ -228,6 +244,11 @@ public class Player : MonoBehaviour
         
         
         Dash.Execute(dir.normalized);
+    }
+
+    public void ResetVelocity()
+    {
+        rb.velocity = Vector3.zero;
     }
 
     private void ExecuteParry()

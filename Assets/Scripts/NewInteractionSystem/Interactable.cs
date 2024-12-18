@@ -25,8 +25,11 @@ namespace NewInteractionSystem
 
         public virtual void Interact()
         {
-            
+            input.DisablePlayerInput();
+            input.DisableUIInput();
         }
+        
+        
 
         private void Trigger() => triggered = true;
     }

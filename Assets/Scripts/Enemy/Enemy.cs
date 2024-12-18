@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
 
 
     public Vector2 DirectionToPlayer => (playerTransform.position - transform.position).normalized.normalized;
+
+    public Action<Transform> OnDeath;
     
     private void Awake()
     {
@@ -120,6 +122,7 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         dead = true;
+        OnDeath?.Invoke(transform);
     }
 
     public void HitEnded()

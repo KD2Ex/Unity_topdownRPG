@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public Player Player = null;
     public SaveDrops Drops;
+    public CommandsMediaPlayer CommandsMediaPlayer;
 
     [SerializeField] private FloatVariable timeScale;
     public float TimeScale => timeScale.Value;
@@ -47,4 +48,6 @@ public class GameManager : MonoBehaviour
     {
         return timeScale.Value;   
     }
+    
+    
 }
